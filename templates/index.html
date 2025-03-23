@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse des Sentiments</title>
+    <style>
+        /* Corps de la page */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        /* Vidéo en arrière-plan */
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Mettre la vidéo derrière le formulaire */
+        }
+
+        /* Conteneur du formulaire */
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: transparent; /* Fond semi-transparent */
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 20px rgb(252, 250, 250);
+            width: 400px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Champ de texte */
+        textarea {
+            width: 95%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: rgba(15, 20, 39, 0.8);
+            resize: none;
+            color: white;
+        }
+
+        /* Bouton d'envoi */
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #115c99;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0e2a9c;
+        }
+
+        /* Résultats de l'analyse */
+        .result {
+            margin-top: 20px;
+            background-color: transparent;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgb(247, 245, 245);
+            text-align: left;
+        }
+
+        .result h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+            color: white;
+        }
+
+        .result p {
+            margin: 5px 0;
+            font-size: 18px;
+            color: white;
+        }
+
+        .result strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Vidéo de fond -->
+    <video id="background-video" autoplay loop muted>
+        <source src="{{ url_for('static', filename='hi.mp4') }}" type="video/mp4">
+        Votre navigateur ne prend pas en charge la vidéo HTML5.
+    </video>
+
+    <!-- Conteneur du formulaire -->
+    <div class="container">
+        <h1>Analyse des Sentiments</h1>
+        <form method="POST" action="/analyze">
+            <textarea name="text" placeholder="Entrez un texte ici..." required></textarea><br><br>
+            <button type="submit">Analyser</button>
+        </form>
+
+        <!-- Affichage du résultat -->
+        {% if sentiment %}
+        <div class="result">
+            <h3>Résultat de l'analyse:</h3>
+            <p><strong>Texte : </strong>{{ text }}</p>
+            <p><strong>Sentiment : </strong>{{ sentiment }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
